@@ -5,7 +5,6 @@ section .text
 	XOR DI, DI
 	XOR CX, CX
     XOR BX, BX
-    MOV CL, 10d
 	MOV BL, 2d
     CALL check
     CALL exit
@@ -41,8 +40,7 @@ impar:
 
 afterlogic:
     INC DI
-    DEC CL
-    CMP CL, 0d
+    CMP DI, 10d
     JNE check
     RET
 

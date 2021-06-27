@@ -12,11 +12,13 @@ section .text
 
 ;    call validate
 
+    
+
+success:
     MOV DX, welcome
     call writeWord
     call waitInput
     int 20h
-
 
 end:
     MOV DX, failed
@@ -41,6 +43,25 @@ waitInput:
 ;    jne end
 ;    ret
 
+countClave:
+    XOR DI, DI
+check:
+    cmp byte [clave+DI], "$"
+    je validate
+    INC DI
+    call check
+
+;countInput:
+;    XOR DI, DI
+;    cmp byte [input+DI], "$"
+;    je validate
+;    INC DI
+
+validate:
+    cmp DI, SI
+    jne end
+    je success
+
 writeWord:
 	mov 	AH, 09h
 	int 	21h
@@ -59,7 +80,7 @@ while:
     jmp while
 exit:
 	mov 	byte [BP+SI], "$"
-    ret
+    call    countClave
 
 section .data
     msg1 db "Ingrese la clave ", "$"
